@@ -1,0 +1,60 @@
+.btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(45deg, #0044ff, #00ffff);
+    color: #000;
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(45deg, #00ffff, #0044ff);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    transform: translateY(-2px);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  
+  .btn-secondary {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff4444;
+    border: 1px solid #ff4444;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+  }
+  
+  .btn-secondary:hover {
+    background: rgba(255, 0, 0, 0.3);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  .btn:disabled {
+    background: rgba(100, 100, 100, 0.3);
+    color: #666;
+    border-color: #666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .button-icon {
+    font-size: 16px;
+  }

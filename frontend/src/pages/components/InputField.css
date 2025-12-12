@@ -1,0 +1,55 @@
+.input-field-container {
+    margin-bottom: 24px;
+    width: 100%;
+  }
+  
+  .input-field-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #00ffff;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .file-input-wrapper {
+    width: 100%;
+  }
+  
+  .file-input-button {
+    width: 100%;
+    padding: 20px 24px;
+    border: 2px dashed #0044ff;
+    border-radius: 6px;
+    background: rgba(0, 20, 40, 0.6);
+    color: #4488ff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .file-input-button:hover {
+    border-color: #00ffff;
+    background: rgba(0, 40, 80, 0.8);
+    color: #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  }
+  
+  .file-input-icon {
+    font-size: 18px;
+  }
+  
+  .file-input-text {
+    font-weight: 600;
+  }
+  
