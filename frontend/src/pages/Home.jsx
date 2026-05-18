@@ -10,7 +10,7 @@ const Home = () => {
       {/* Animated Background */}
       <div className="cyber-grid"></div>
       <div className="scan-line"></div>
-      
+
       <div className="upload-container">
         {/* Header Section */}
         <div className="upload-header">
@@ -26,7 +26,7 @@ const Home = () => {
             ENCRYPTED FILE & DATA TRANSMISSION SYSTEM
           </p>
         </div>
-        
+
         {/* Status Bar */}
         <div className="status-bar">
           <div className="status-item">
@@ -42,7 +42,7 @@ const Home = () => {
             <span className="status-value verified">VERIFIED</span>
           </div>
         </div>
-        
+
         <div className="upload-form">
           <div className="form-content">
             {/* Image Input Button */}
@@ -74,6 +74,23 @@ const Home = () => {
                   >
                     <span className="file-input-icon">🔐</span>
                     <span className="file-input-text">ENER TO ANALYZE MALICIOS TEXT</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* URL Input Button */}
+            <div className="input-section">
+              <div className="input-field-container">
+                <label className="input-field-label">ENTER SECURE LINK</label>
+                <div className="file-input-wrapper">
+                  <button
+                    type="button"
+                    className="file-input-button"
+                    onClick={() => navigate("/urlanalysis")}
+                  >
+                    <span className="file-input-icon">🔗</span>
+                    <span className="file-input-text">ENTER TO ANALYZE MALICIOUS URL</span>
                   </button>
                 </div>
               </div>

@@ -1,5 +1,5 @@
-import Imagekit from "imagekit"
-import config from "../config/config.js"
+import Imagekit from "imagekit";
+import config from "../config/config.js";
 
 
 const imagekit = new Imagekit({

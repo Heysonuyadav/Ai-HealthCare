@@ -46,9 +46,9 @@ export async function textAnalyze(text) {
         config: {
             systemInstruction: `
 Analyze the text and classify it as Safe, Suspicious, or Harmful.
-Explain the reason in 20–50 words.
-Do not create harmful content.
-            `
+Explain the reason in 200–500 words and 200-500 characters.
+Do not create harmful content.and give best suggetion to make it safe. also give a scrore from 0 to 100,
+ where 0 is completely sayfe and 100 is extremely harmful, and the score should be between 0 to 100. `
         }
     });
 

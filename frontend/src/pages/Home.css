@@ -197,27 +197,34 @@
     flex-direction: column;
     gap: 25px;
   }
-  
+  /* input section */
   .input-section {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
   }
   
   .input-field-container {
-    margin-bottom: 24px;
+    margin: 24px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
   }
   
   .input-field-label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
+    margin-bottom:18px;
+    font-weight: 700;
     color: #00ffff;
     font-size: 12px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 1px;
     font-family: 'Courier New', monospace;
+    
   }
   
   .file-input-wrapper {
@@ -242,6 +249,7 @@
     font-family: 'Courier New', monospace;
     text-transform: uppercase;
     letter-spacing: 1px;
+    
   }
   
   .file-input-button:hover {
