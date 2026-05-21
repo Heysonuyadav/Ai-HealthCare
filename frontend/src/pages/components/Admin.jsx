@@ -16,7 +16,7 @@ const Admin = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:3000/auth/admin-login',
+                'https://ai-healthcare-orvs.onrender.com/auth/admin-login',
                 { password },
                 { withCredentials: true }
             );
