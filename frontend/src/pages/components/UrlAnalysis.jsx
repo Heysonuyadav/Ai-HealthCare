@@ -36,7 +36,7 @@ const UrlAnalysis = () => {
             formData.append("image", image);
 
             const response = await axios.post(
-                "http://localhost:3000/ai/analyze-image",
+                "https://ai-healthcare-orvs.onrender.com/ai/analyze-image",
                 formData,
                 {
                     headers: {
