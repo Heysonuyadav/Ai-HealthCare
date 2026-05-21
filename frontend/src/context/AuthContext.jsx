@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const refreshUser = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3000/auth/me', {
+            const response = await axios.get('https://ai-healthcare-orvs.onrender.com/auth/me', {
                 withCredentials: true,
             });
             setUser(response.data.user);
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post('http://localhost:3000/auth/logout', {}, { withCredentials: true });
+            await axios.post('https://ai-healthcare-orvs.onrender.com/auth/logout', {}, { withCredentials: true });
         } catch (error) {
             // ignore logout errors
         }
