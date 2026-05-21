@@ -19,7 +19,7 @@ const TextAnalysis = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/ai/text",
+        "https://ai-healthcare-orvs.onrender.com/ai/text",
         { inputText },
         { withCredentials: true }
       );
