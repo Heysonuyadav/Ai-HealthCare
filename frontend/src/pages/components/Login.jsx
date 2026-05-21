@@ -28,7 +28,7 @@ const Login = () => {
 
     try {
       await axios.post(
-        'http://localhost:3000/auth/login',
+        'https://ai-healthcare-orvs.onrender.com/auth/login',
         {
           username: formData.identifier,
           email: formData.identifier,
