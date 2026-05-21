@@ -22,7 +22,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/auth/me', { withCredentials: true });
+        const response = await axios.get('https://ai-healthcare-orvs.onrender.com/auth/me', { withCredentials: true });
         const fetchedUser = response.data.user;
         const profileData = {
           username: fetchedUser.username,
@@ -34,7 +34,7 @@ const Profile = () => {
         setEditedUser(profileData);
 
         if (profileData.role === 'admin') {
-          const usersResponse = await axios.get('http://localhost:3000/auth/users', { withCredentials: true });
+          const usersResponse = await axios.get('https://ai-healthcare-orvs.onrender.com/auth/users', { withCredentials: true });
           setAllUsers(usersResponse.data.users || []);
         }
       } catch (error) {
