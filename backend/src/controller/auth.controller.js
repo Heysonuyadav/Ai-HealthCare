@@ -53,7 +53,7 @@ export async function createUserController(req, res) {
         role
     });
     const token = jwt.sign({ id: user._id }, config.JWT_SECRET);
-    res.cookie("token", token, { httpOnly: true, sameSite: "none" });
+    res.cookie("token", token, { httpOnly: true, secure:true , sameSite: "None" });
     return res.status(201).json({
         message: "User created successfully",
         user,
