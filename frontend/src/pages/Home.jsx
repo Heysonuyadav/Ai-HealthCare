@@ -9,7 +9,7 @@ const Home = () => {
     <div className="upload-page">
       {/* Animated Background */}
       <div className="cyber-grid"></div>
-      <div className="scan-line"></div>
+      {/* <div className="scan-line"></div> */}
 
       <div className="upload-container">
         {/* Header Section */}
@@ -104,7 +104,7 @@ const Home = () => {
               WIPE DATA
             </button>
             <button type="button" className="btn btn-primary">
-              <span className="button-icon">🚀</span>
+              <span className="button-icon">🔒</span>
               INITIATE SECURE UPLOAD
             </button>
           </div>

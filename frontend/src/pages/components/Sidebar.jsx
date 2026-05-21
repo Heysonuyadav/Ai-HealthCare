@@ -1,14 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
 import './Sidebar.css';
 
 const Sidebar = ({ onHide }) => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar-header">
         <h2>AI-SECURE</h2>
         <button className="sidebar-close-button" onClick={onHide}>
-          ×
+          ☰
         </button>
       </div>
       <nav className="sidebar-nav">
@@ -35,12 +44,20 @@ const Sidebar = ({ onHide }) => {
         </Link>
       </nav>
       <div className="sidebar-auth">
-        <Link to="/login" className="sidebar-link auth-link">
-          <span className="icon">🔑</span> Login
-        </Link>
-        <Link to="/signup" className="sidebar-link auth-link">
-          <span className="icon">📝</span> Sign Up
-        </Link>
+        {user ? (
+          <button onClick={handleLogout} className="sidebar-link auth-link logout-button" type="button">
+            <span className="icon">🚪</span> Logout
+          </button>
+        ) : (
+          <>
+            <Link to="/login" className="sidebar-link auth-link">
+              <span className="icon">🔑</span> Login
+            </Link>
+            <Link to="/signup" className="sidebar-link auth-link">
+              <span className="icon">📝</span> Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,54 +1,105 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ImageAnalysis.css";
 
 const UrlAnalysis = () => {
     const navigate = useNavigate();
-    const [inputUrl, setInputUrl] = useState("");
+    const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
     const [analysisResult, setAnalysisResult] = useState(null);
+    const [question, setQuestion] = useState("");
+    const [questionAnswer, setQuestionAnswer] = useState(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [isAsking, setIsAsking] = useState(false);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl);
+            setAnalysisResult(null);
+        }
+    };
 
     const handleAnalyze = async () => {
-        if (!inputUrl.trim()) {
-            alert("Please enter a URL to analyze.");
-            return;
-        }
-
-        // Basic URL validation
-        try {
-            new URL(inputUrl);
-        } catch {
-            alert("Please enter a valid URL.");
+        if (!image) {
+            alert("Please select an image first.");
             return;
         }
 
         setIsAnalyzing(true);
 
         try {
+            const formData = new FormData();
+            formData.append("image", image);
+
             const response = await axios.post(
-                "http://localhost:3000/ai/analyze-url", // Assuming this endpoint exists or will be added
-                { inputUrl },
-                { withCredentials: true }
+                "http://localhost:3000/ai/analyze-image",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                    withCredentials: true,
+                }
             );
 
-            const urlData = response.data.urls; // Adjust based on backend response
+            const img = response.data?.data || response.data?.imageText || {};
 
             setAnalysisResult({
-                summary: urlData?.description || "No analysis found.",
-                riskLevel: urlData?.riskLevel || "Unknown"
+                summary: img?.description || "No description found."
             });
+            setQuestion("");
+            setQuestionAnswer(null);
         } catch (error) {
-            console.error("Error analyzing URL:", error);
-            alert("Failed to analyze URL.");
+            console.error("Error analyzing image:", error);
+            alert("Failed to analyze image.");
         }
 
         setIsAnalyzing(false);
     };
 
+    const handleAskQuestion = async () => {
+        if (!analysisResult?.summary) {
+            alert("Please analyze an image first.");
+            return;
+        }
+        if (!question.trim()) {
+            alert("Please enter a question.");
+            return;
+        }
+
+        setIsAsking(true);
+
+        try {
+            const response = await axios.post(
+                "http://localhost:3000/ai/image-question",
+                {
+                    description: analysisResult.summary,
+                    question: question.trim(),
+                },
+                { withCredentials: true }
+            );
+
+            setQuestionAnswer(response.data?.answer || "No answer available.");
+        } catch (error) {
+            console.error("Error asking question:", error);
+            alert("Failed to ask question.");
+        }
+
+        setIsAsking(false);
+    };
+
     const handleReset = () => {
-        setInputUrl("");
+        setImage(null);
+        setImagePreview(null);
         setAnalysisResult(null);
+        setQuestion("");
+        setQuestionAnswer(null);
+        const fileInput = document.getElementById("image-upload");
+        if (fileInput) fileInput.value = "";
     };
 
     return (
@@ -65,11 +116,11 @@ const UrlAnalysis = () => {
                         SECURE CONNECTION
                     </div>
                     <h1 className="page-title">
-                        <span className="title-glow">SECURE URL</span>
+                        <span className="title-glow">SECURE IMAGE</span>
                         <span className="title-sub">ANALYSIS</span>
                     </h1>
                     <p className="page-subtitle">
-                        ENCRYPTED LINK ANALYSIS SYSTEM
+                        IMAGE UPLOAD & CHECK SYSTEM
                     </p>
                 </div>
 
@@ -89,74 +140,118 @@ const UrlAnalysis = () => {
                     </div>
                 </div>
 
-                {/* Analysis Form */}
+                {/* Upload */}
                 <div className="analysis-form">
-
-                    <div className="input-section">
+                    <div className="big-input-section">
                         <div className="input-field-container">
-                            <label className="input-field-label">ENTER URL FOR ANALYSIS</label>
+                            <label className="input-field-label">SELECT IMAGE TO ANALYZE</label>
 
-                            <input
-                                type="url"
-                                className="text-input"
-                                placeholder="https://example.com"
-                                value={inputUrl}
-                                onChange={(e) => setInputUrl(e.target.value)}
-                            />
+                            <div className="big-file-input-wrapper">
+                                <input
+                                    type="file"
+                                    id="image-upload"
+                                    className="file-input-hidden"
+                                    onChange={handleImageChange}
+                                    accept="image/*"
+                                />
+                                <div
+                                    className="big-file-input-area"
+                                    onClick={() => document.getElementById('image-upload').click()}
+                                >
+                                    {imagePreview ? (
+                                        <div className="big-image-preview">
+                                            <img src={imagePreview} alt="Preview" className="big-preview-image" />
+                                            <div className="big-preview-overlay">
+                                                <div className="big-security-tag">
+                                                    <span className="big-lock-icon">🔒</span>
+                                                    ENCRYPTED PREVIEW
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="big-file-input-content">
+                                            <span className="big-file-input-icon">🖼️</span>
+                                            <span className="big-file-input-text">CHOOSE IMAGE</span>
+                                            <span className="big-file-input-subtext">Click to select an image</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Result */}
                     {analysisResult && (
-                        <div className="result-section">
-                            <h3>Analysis Result</h3>
-                            <p><strong>Risk Level:</strong> {analysisResult.riskLevel}</p>
-                            <p><strong>Summary:</strong> {analysisResult.summary}</p>
-                        </div>
+                        <>
+                            <div className="simple-analysis-result">
+                                <div className="result-card">
+                                    <div className="result-header">
+                                        <h2># Analysis Complete</h2>
+                                    </div>
+                                    <div className="result-content">
+                                        <div className="result-summary">
+                                            <h3>Summary</h3>
+                                            <p>{analysisResult.summary}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="question-group">
+                                <label className="input-field-label">Ask a short question about this image</label>
+                                <textarea
+                                    className="question-input"
+                                    rows={2}
+                                    placeholder="What is this image showing?"
+                                    value={question}
+                                    onChange={(e) => setQuestion(e.target.value)}
+                                />
+                                <div className="question-actions">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={handleAskQuestion}
+                                        disabled={isAsking || !question.trim()}
+                                    >
+                                        {isAsking ? "⏳ ASKING..." : "Ask"}
+                                    </button>
+                                </div>
+                            </div>
+
+                            {questionAnswer && (
+                                <div className="question-answer">
+                                    <h3>Answer</h3>
+                                    <p>{questionAnswer}</p>
+                                </div>
+                            )}
+                        </>
                     )}
 
-                    {/* Buttons */}
                     <div className="form-actions">
                         <button
                             type="button"
                             className="btn btn-secondary"
-                            onClick={handleReset}
+                            onClick={() => navigate("/")}
                         >
-                            <span className="button-icon">🔄</span>
-                            RESET
+                            ← BACK TO HOME
                         </button>
+
+                        <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={handleReset}
+                            disabled={isAnalyzing}
+                        >
+                            🔄 CLEAR
+                        </button>
+
                         <button
                             type="button"
                             className="btn btn-primary"
                             onClick={handleAnalyze}
-                            disabled={isAnalyzing}
+                            disabled={isAnalyzing || !image}
                         >
-                            <span className="button-icon">
-                                {isAnalyzing ? "⏳" : "🔍"}
-                            </span>
-                            {isAnalyzing ? "ANALYZING..." : "ANALYZE URL"}
+                            {isAnalyzing ? "⏳ ANALYZING..." : "🔍 ANALYZE IMAGE"}
                         </button>
-                    </div>
-                </div>
-
-                {/* Back Button */}
-                <div className="back-button">
-                    <button
-                        type="button"
-                        className="btn btn-back"
-                        onClick={() => navigate("/")}
-                    >
-                        <span className="button-icon">⬅️</span>
-                        BACK TO HOME
-                    </button>
-                </div>
-
-                {/* Footer */}
-                <div className="security-footer">
-                    <div className="security-info">
-                        <span className="info-item">🔒 END-TO-END ENCRYPTION</span>
-                        <span className="info-item">🛡️ MALWARE SCANNED</span>
-                        <span className="info-item">🌐 URL VERIFIED</span>
                     </div>
                 </div>
             </div>

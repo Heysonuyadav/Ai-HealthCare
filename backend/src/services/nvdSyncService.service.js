@@ -14,7 +14,7 @@ export async function fetchLatestCVEs(limit = 5) {
     console.log(`✅ Got ${data.length} vulnerabilities from NVD.`);
     return data;
   } catch (error) {
-    console.error("❌ Error fetching NVD data:", error.message);
+    console.error("Error fetching NVD data:", error.message);
     return [];
   }
 }
@@ -53,6 +53,7 @@ export async function saveVulnerabilitiesToAsset() {
     await asset.save();
     console.log(`✅ Added ${vulnerabilities.length} new vulnerabilities to asset: ${asset.name}`);
   } catch (error) {
-    console.error("❌ Error saving vulnerabilities:", error.message);
-  }
+    console.error(" Error saving vulnerabilities:", error.message); 
+  }    
+
 }

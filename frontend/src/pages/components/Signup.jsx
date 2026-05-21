@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext.jsx';
 import './Auth.css';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { user, refreshUser } = useAuth();
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,7 +28,8 @@ const Signup = () => {
 
     try {
       await axios.post('http://localhost:3000/auth/register', formData, { withCredentials: true });
-      navigate('/login');
+      await refreshUser();
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Signup failed');
     } finally {
@@ -31,7 +40,7 @@ const Signup = () => {
   return (
     <div className="auth-page">
       <div className="cyber-grid"></div>
-      <div className="scan-line"></div>
+      {/* <div className="scan-line"></div> */}
 
       <div className="auth-container">
         <div className="auth-header">

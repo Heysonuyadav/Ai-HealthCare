@@ -31,17 +31,17 @@ body {
   position: fixed;
   top: 16px;
   left: 16px;
-  background: #00ff88;
+  background: #0e0f0fbd;
   border: none;
-  color: #000;
+  color: hsla(0, 43%, 99%, 0.945);
   padding: 10px 14px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   z-index: 1100;
-  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+  box-shadow: 0 0 1px rgba(204, 212, 209, 0.3);
 }
 
 .sidebar-open-button:hover {
-  background: #00cc77;
+  background: #181818;
 }

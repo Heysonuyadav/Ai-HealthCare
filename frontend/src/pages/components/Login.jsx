@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext.jsx';
 import './Auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { user, refreshUser } = useAuth();
   const [formData, setFormData] = useState({ identifier: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,6 +36,7 @@ const Login = () => {
         },
         { withCredentials: true }
       );
+      await refreshUser();
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
@@ -39,7 +48,7 @@ const Login = () => {
   return (
     <div className="auth-page">
       <div className="cyber-grid"></div>
-      <div className="scan-line"></div>
+      {/* <div className="scan-line"></div> */}
 
       <div className="auth-container">
         <div className="auth-header">

@@ -24,10 +24,15 @@ const TextAnalysis = () => {
         { withCredentials: true }
       );
 
-      const txt = response.data.texts;
+      const resultData = response.data?.data || response.data || {};
+      const parsed = resultData?.parsed || null;
 
       setAnalysisResult({
-        summary: txt?.description || "No description found."
+        summary: parsed?.explanation || resultData?.description || "No description found.",
+        classification: parsed?.classification || null,
+        suggestion: parsed?.suggestion || null,
+        score: parsed?.score != null ? parsed.score : null,
+        raw: resultData?.description || null,
       });
     } catch (error) {
       console.error("Error analyzing text:", error);
@@ -107,8 +112,23 @@ const TextAnalysis = () => {
 
                 <div className="result-content">
                   <div className="result-summary">
-                    <h3>Analysis Summary</h3>
+                    <h3>Classification</h3>
+                    <p>{analysisResult.classification || "Not available"}</p>
+                  </div>
+
+                  <div className="result-summary">
+                    <h3>Explanation</h3>
                     <p>{analysisResult.summary}</p>
+                  </div>
+
+                  <div className="result-summary">
+                    <h3>Suggestion</h3>
+                    <p>{analysisResult.suggestion || "No suggestion provided."}</p>
+                  </div>
+
+                  <div className="result-summary">
+                    <h3>Score</h3>
+                    <p>{analysisResult.score != null ? analysisResult.score : "N/A"}</p>
                   </div>
                 </div>
               </div>
@@ -117,16 +137,16 @@ const TextAnalysis = () => {
 
           {/* Buttons */}
           <div className="form-actions">
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="btn btn-secondary"
               onClick={() => navigate('/')}
             >
               ← BACK TO HOME
             </button>
 
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="btn btn-secondary"
               onClick={handleReset}
               disabled={isAnalyzing}

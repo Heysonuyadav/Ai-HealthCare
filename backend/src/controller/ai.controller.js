@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid"
 import { analyzeImageText } from "../dao/image.dao.js";
 import { uploadFile } from "../services/storage.service.js";
-import { analyzeImage, textAnalyze } from "../services/ai.service.js";
+import { analyzeImage, textAnalyze, askImageQuestion } from "../services/ai.service.js";
 import { textAnalisis } from "../dao/text.dao.js";
 
 
@@ -47,6 +47,26 @@ export async function analyzeImageController(req, res) {
     }
 }
 
+export async function askImageQuestionController(req, res) {
+    try {
+        const { description, question } = req.body;
+
+        if (!description || !question) {
+            return res.status(400).json({ error: "Description and question are required." });
+        }
+
+        const answer = await askImageQuestion(description, question);
+
+        res.status(200).json({
+            success: true,
+            answer
+        });
+    } catch (error) {
+        console.error("Error in askImageQuestionController:", error);
+        res.status(500).json({ error: "Internal server error during image question answering" });
+    }
+}
+
 // import { analyzeText, analyzeTextWithFallback, getAvailableModels } from "../services/analysis.service.js";
 
 export async function analyzeTextController(req, res) {
@@ -71,17 +91,20 @@ export async function analyzeTextController(req, res) {
 
         console.log(`Analyzing text: ${sanitizedText.substring(0, 50)}...`);
 
-        const description = await textAnalyze(sanitizedText);
-
+        const descriptionResult = await textAnalyze(sanitizedText);
         const texts = await textAnalisis({
             inputText: sanitizedText,
-            description
+            description: descriptionResult.raw || descriptionResult.parsed || ""
         });
 
         res.status(201).json({
             success: true,
             message: "Text analyzed successfully",
-            data: texts
+            data: {
+                inputText: texts.inputText,
+                description: texts.description,
+                parsed: descriptionResult.parsed,
+            }
         });
     } catch (error) {
         console.error("Error in analyzeTextController:", error);

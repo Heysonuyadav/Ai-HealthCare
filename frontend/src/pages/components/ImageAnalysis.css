@@ -144,6 +144,46 @@
   color: #88ffff;
 }
 
+.question-group {
+  margin: 20px 0;
+}
+
+.question-input {
+  width: 100%;
+  min-height: 70px;
+  border-radius: 10px;
+  border: 1px solid #00ffff;
+  background: rgba(0, 20, 40, 0.85);
+  color: #ffffff;
+  padding: 12px;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.question-actions {
+  margin-top: 12px;
+}
+
+.question-answer {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #00ffff;
+  border-radius: 10px;
+  background: rgba(0, 20, 40, 0.9);
+  color: #cffcff;
+}
+
+.question-answer h3 {
+  margin: 0 0 10px 0;
+  color: #00ffff;
+  font-size: 1.1rem;
+}
+
+.question-answer p {
+  margin: 0;
+  line-height: 1.6;
+}
+
 /* Form Actions */
 .form-actions {
   display: flex;
@@ -218,6 +258,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -229,28 +270,28 @@
   .big-file-input-area {
     height: 300px;
   }
-  
+
   .big-file-input-text {
     font-size: 1.2rem;
   }
-  
+
   .big-file-input-subtext {
     font-size: 0.9rem;
   }
-  
+
   .form-actions {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .form-actions .btn {
     min-width: 100%;
   }
-  
+
   .result-card {
     padding: 20px;
   }
-  
+
   .result-header h2 {
     font-size: 1.4rem;
   }
@@ -260,11 +301,11 @@
   .big-file-input-area {
     height: 250px;
   }
-  
+
   .big-file-input-icon {
     font-size: 3rem;
   }
-  
+
   .big-file-input-text {
     font-size: 1.1rem;
   }
