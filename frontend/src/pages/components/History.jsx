@@ -10,7 +10,7 @@ const History = () => {
     // Fetch history from backend (assuming an endpoint exists)
     const fetchHistory = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/asset/history', { withCredentials: true });
+        const response = await axios.get('https://ai-healthcare-orvs.onrender.com/asset/history', { withCredentials: true });
         setHistory(response.data.data || []);
       } catch (error) {
         console.error('Error fetching history:', error);
