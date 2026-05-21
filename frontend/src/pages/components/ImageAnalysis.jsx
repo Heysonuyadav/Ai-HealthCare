@@ -22,7 +22,7 @@ const ImageAnalysis = () => {
 
   // Optional initial load
   useEffect(() => {
-    axios.post("http://localhost:3000/ai/analyze-image", {
+    axios.post("https://ai-healthcare-orvs.onrender.com/ai/analyze-image", {
       withcredential: true
     }).then((response) => {
       setAnalysisResult(response.data.analysisResult);
