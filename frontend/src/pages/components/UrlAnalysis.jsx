@@ -75,7 +75,7 @@ const UrlAnalysis = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:3000/ai/image-question",
+                "https://ai-healthcare-orvs.onrender.com/ai/image-question",
                 {
                     description: analysisResult.summary,
                     question: question.trim(),
