@@ -27,7 +27,7 @@ const Signup = () => {
     setError('');
 
     try {
-      await axios.post('http://localhost:3000/auth/register', formData, { withCredentials: true });
+      await axios.post('https://ai-healthcare-orvs.onrender.com/auth/register', formData, { withCredentials: true });
       await refreshUser();
       navigate('/');
     } catch (err) {
